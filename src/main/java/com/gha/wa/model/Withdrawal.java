@@ -17,6 +17,7 @@ public class Withdrawal {
 	private String accountNumber;
 	private String accountName;
 	private String currency;
+	private String month;
 	private double amount;
 	/**
 	 * @param date
@@ -98,9 +99,35 @@ public class Withdrawal {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+
+	/**
+	 * @return the id
 	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the month
+	 */
+	public String getMonth() {
+		return month;
+	}
+
+	/**
+	 * @param month the month to set
+	 */
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -112,11 +139,11 @@ public class Withdrawal {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((currency == null) ? 0 : currency.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((month == null) ? 0 : month.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -160,15 +187,23 @@ public class Withdrawal {
 		} else if (!date.equals(other.date)) {
 			return false;
 		}
+		if (id != other.id) {
+			return false;
+		}
+		if (month == null) {
+			if (other.month != null) {
+				return false;
+			}
+		} else if (!month.equals(other.month)) {
+			return false;
+		}
 		return true;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
 	@Override
 	public String toString() {
-		return "Withdrawal [date=" + date + ", accountNumber=" + accountNumber + ", accountName=" + accountName
-				+ ", currency=" + currency + ", amount=" + amount + "]";
+		return "Withdrawal [id=" + id + ", date=" + date + ", accountNumber=" + accountNumber + ", accountName="
+				+ accountName + ", currency=" + currency + ", month=" + month + ", amount=" + amount + "]";
 	}
 	
 	

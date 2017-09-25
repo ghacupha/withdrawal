@@ -16,7 +16,7 @@ public interface WithdrawalDao {
 	 * 
 	 * @param index
 	 */
-	void readWithdrawal(int index);
+	Withdrawal readWithdrawal(int index);
 
 	/**
 	 * Updates a given withdrawal given an index

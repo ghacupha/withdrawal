@@ -26,4 +26,11 @@ public class DateUtils {
 		return localDate;
 	}
 
+	public static String monthOf(LocalDate date) {
+		
+		DateTimeFormatter monthName = DateTimeFormatter.ofPattern("MMM");
+		
+		return monthName.format(date);
+	}
+
 }

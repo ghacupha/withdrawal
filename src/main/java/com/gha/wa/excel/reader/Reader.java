@@ -40,7 +40,7 @@ public class Reader {
 	
 	public Map<String,List<Withdrawal>> getSheetMap(Workbook workbook){
 		
-		 Map<String,List<Withdrawal>> sheetMap = new HashMap<>();
+		 Map<String,List<Withdrawal>> sheetMap = new HashMap<String,List<Withdrawal>>();
 		
 		for(Sheet sheet : workbook) {
 			
@@ -54,7 +54,7 @@ public class Reader {
 	
 	public List<Withdrawal> getWithdrawalList(Sheet sheet){
 		
-		List<Withdrawal> withdrawalList = new ArrayList<>();
+		List<Withdrawal> withdrawalList = new ArrayList<Withdrawal>();
 		
 		for(Row row : sheet) {
 			
@@ -62,16 +62,25 @@ public class Reader {
 			
 			Withdrawal withdrawal = new Withdrawal();
 			
-			withdrawal.setDate(DateUtils.dateOf(row.getCell(0).getDateCellValue()));
-			withdrawal.setAccountNumber(row.getCell(1).getRichStringCellValue().getString());
-			withdrawal.setAccountName((row.getCell(2).getRichStringCellValue().getString()));
-			withdrawal.setCurrency(row.getCell(3).getRichStringCellValue().getString());
-			withdrawal.setAmount(row.getCell(4).getNumericCellValue());
+			try {
+				withdrawal.setDate(DateUtils.dateOf(row.getCell(0).getDateCellValue()));
+				withdrawal.setAccountNumber(row.getCell(1).getRichStringCellValue().getString());
+				withdrawal.setAccountName((row.getCell(2).getRichStringCellValue().getString()));
+				withdrawal.setCurrency(row.getCell(3).getRichStringCellValue().getString());
+				withdrawal.setAmount(row.getCell(4).getNumericCellValue());
+				withdrawal.setMonth(DateUtils.monthOf(withdrawal.getDate()));
+			} catch (Exception e) {
+				
+				System.err.println("Error reading row : "+row.getRowNum()+
+						" in sheet :"+row.getSheet()+
+						" Caused by :"+e.getCause()+
+						" Error occuring at :"+e.getStackTrace());
+			}
 			
 			System.out.println("Row : "+row.getRowNum()+" read successfully");
 			
 			withdrawalList.add(withdrawal);
-			System.out.println("Row : "+row.getRowNum()+" read and addd to withdrawalList");
+			System.out.println("Row : "+row.getRowNum()+" read and added to withdrawalList");
 			
 		}
 		
@@ -87,7 +96,6 @@ public class Reader {
 			System.out.println("Workbook object object acquired successfully");
 			
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -98,7 +106,6 @@ public class Reader {
 			try {
 				withdrawalService.saveWorkSheet(getWithdrawalList(sheet));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -186,7 +193,6 @@ public class Reader {
 		try {
 			file = new FileInputStream(new File(pathName));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

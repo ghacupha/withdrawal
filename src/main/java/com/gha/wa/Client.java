@@ -1,12 +1,15 @@
 package com.gha.wa;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.gha.wa.excel.reader.Reader;
+import com.gha.wa.model.MonthlyWithdrawal;
+import com.gha.wa.model.MonthlyWithdrawalManager;
 import com.gha.wa.model.Withdrawal;
 import com.gha.wa.model.data.WithdrawalService;
 
@@ -16,6 +19,7 @@ public class Client {
 			"C:\\ExcelFilesForAnalysis\\All_Debits.xls";
 	private Reader reader;
 	private WithdrawalService withdrawalService;
+	private MonthlyWithdrawalManager manager;
 	
 	/**
 	 * @param reader
@@ -25,6 +29,7 @@ public class Client {
 		super();
 		reader = new Reader();	
 		withdrawalService = new WithdrawalService();
+		manager = new MonthlyWithdrawalManager(LocalDate.of(2016, 8,1), LocalDate.of(2017,9,1));
 		
 	}
 
@@ -48,6 +53,14 @@ public class Client {
 		
 		client.getReader().saveWorkBook(client.getPathName());
 		
+		//client.getManager().getMonthlyWithdrawals();
+		
+		for(MonthlyWithdrawal monthlyWithdrawal : client.getManager().getMonthlyWithdrawals()){
+			
+			System.out.println("Month name : "+monthlyWithdrawal.getMonth());
+			System.out.println("Month Withdrawals : "+monthlyWithdrawal.getTotalWithdrawal());
+		}
+		
 	
 	}
 
@@ -70,6 +83,13 @@ public class Client {
 	 */
 	public String getPathName() {
 		return pathName;
+	}
+
+	/**
+	 * @return the manager
+	 */
+	public MonthlyWithdrawalManager getManager() {
+		return manager;
 	}
 	
 	

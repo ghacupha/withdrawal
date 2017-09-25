@@ -40,9 +40,7 @@ class WithdrawalDaoImpl implements WithdrawalDao{
 		em.close();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gha.wa.model.data.WithdrawalDao#createWithdrawal(com.gha.wa.model.Withdrawal)
-	 */
+	
 	@Override
 	public void createWithdrawal(Withdrawal withdrawal) {
 
@@ -51,27 +49,26 @@ class WithdrawalDaoImpl implements WithdrawalDao{
 		//System.out.println(withdrawal + " saved successfully");
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gha.wa.model.data.WithdrawalDao#readWithdrawal(int)
-	 */
+	
 	@Override
-	public void readWithdrawal(int index) {
-		// TODO Auto-generated method stub
+	public Withdrawal readWithdrawal(int index) {
+
+		Withdrawal withdrawal = new Withdrawal();
+		
+		withdrawal = em.find(Withdrawal.class, index);
+		
+		return withdrawal;
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gha.wa.model.data.WithdrawalDao#updateWithdrawal(int)
-	 */
+	
 	@Override
 	public void updateWithdrawal(int index) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see com.gha.wa.model.data.WithdrawalDao#deleteWithdrawal(int)
-	 */
+	
 	@Override
 	public void deleteWithdrawal(int index) {
 		// TODO Auto-generated method stub
